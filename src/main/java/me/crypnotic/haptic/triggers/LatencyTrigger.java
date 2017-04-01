@@ -2,6 +2,8 @@ package me.crypnotic.haptic.triggers;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.network.NetHandlerPlayClient;
+import net.minecraft.client.network.NetworkPlayerInfo;
 
 public class LatencyTrigger implements ITrigger {
 
@@ -9,7 +11,15 @@ public class LatencyTrigger implements ITrigger {
 
 	@Override
 	public void update(Minecraft minecraft, EntityPlayerSP player) {
-		this.latency = minecraft.getNetHandler().getPlayerInfo(player.getUniqueID()).getResponseTime();
+		NetHandlerPlayClient handler = minecraft.getNetHandler();
+		if (handler == null) {
+			return;
+		}
+		NetworkPlayerInfo info = handler.getPlayerInfo(player.getUniqueID());
+		if (info == null) {
+			return;
+		}
+		this.latency = info.getResponseTime();
 	}
 
 	@Override
