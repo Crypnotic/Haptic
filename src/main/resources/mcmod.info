@@ -1,0 +1,15 @@
+[
+{
+  "modid": "haptic",
+  "name": "Haptic",
+  "description": "Just a finicky information display mod",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Crypnotic"],
+  "credits": "The Minecraft modding community",
+  "logoFile": "",
+  "screenshots": []
+}
+]
