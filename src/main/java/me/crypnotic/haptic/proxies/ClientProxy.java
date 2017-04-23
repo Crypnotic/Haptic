@@ -8,6 +8,7 @@ import me.crypnotic.haptic.triggers.FramesTrigger;
 import me.crypnotic.haptic.triggers.ITrigger;
 import me.crypnotic.haptic.triggers.LatencyTrigger;
 import me.crypnotic.haptic.triggers.LocationTrigger;
+import me.crypnotic.haptic.triggers.Toggle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -20,19 +21,29 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 public class ClientProxy {
 
 	private List<ITrigger> triggers;
+	private Toggle toggle;
+	private boolean enabled;
 
 	public void preInit() {
 		this.triggers = new ArrayList<ITrigger>();
+		this.toggle = new Toggle(this);
+		this.enabled = true;
+
+		toggle.init();
 
 		triggers.add(new FramesTrigger());
 		triggers.add(new LatencyTrigger());
 		triggers.add(new LocationTrigger());
 
+		MinecraftForge.EVENT_BUS.register(toggle);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@SubscribeEvent
 	public void onRender(Post event) {
+		if (!enabled) {
+			return;
+		}
 		Minecraft minecraft = Minecraft.getMinecraft();
 		if (canRender(minecraft, event)) {
 			FontRenderer renderer = minecraft.fontRendererObj;
@@ -46,6 +57,9 @@ public class ClientProxy {
 
 	@SubscribeEvent
 	public void onPlayerTick(ClientTickEvent event) {
+		if (!enabled) {
+			return;
+		}
 		Minecraft minecraft = Minecraft.getMinecraft();
 		if (canUpdate(minecraft)) {
 			EntityPlayerSP player = minecraft.thePlayer;
@@ -62,5 +76,13 @@ public class ClientProxy {
 
 	private boolean canRender(Minecraft minecraft, Post event) {
 		return canUpdate(minecraft) && event.type == ElementType.TEXT;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 }
