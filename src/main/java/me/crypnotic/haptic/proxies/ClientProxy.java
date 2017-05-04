@@ -62,7 +62,7 @@ public class ClientProxy {
 		}
 		Minecraft minecraft = Minecraft.getMinecraft();
 		if (canUpdate(minecraft)) {
-			EntityPlayerSP player = minecraft.thePlayer;
+			EntityPlayerSP player = minecraft.player;
 			for (ITrigger trigger : triggers) {
 				trigger.update(minecraft, player);
 			}
@@ -70,12 +70,12 @@ public class ClientProxy {
 	}
 
 	private boolean canUpdate(Minecraft minecraft) {
-		return minecraft.thePlayer != null && (minecraft.inGameHasFocus
+		return minecraft.player != null && (minecraft.inGameHasFocus
 				|| (minecraft.currentScreen != null && minecraft.ingameGUI.getChatGUI().getChatOpen()));
 	}
 
 	private boolean canRender(Minecraft minecraft, Post event) {
-		return canUpdate(minecraft) && event.type == ElementType.TEXT;
+		return canUpdate(minecraft) && event.getType() == ElementType.TEXT;
 	}
 
 	public boolean isEnabled() {

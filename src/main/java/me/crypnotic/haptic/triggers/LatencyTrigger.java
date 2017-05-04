@@ -11,7 +11,7 @@ public class LatencyTrigger implements ITrigger {
 
 	@Override
 	public void update(Minecraft minecraft, EntityPlayerSP player) {
-		NetHandlerPlayClient handler = minecraft.getNetHandler();
+		NetHandlerPlayClient handler = minecraft.getConnection();
 		if (handler == null) {
 			return;
 		}
