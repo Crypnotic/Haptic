@@ -34,7 +34,6 @@ public class ClientProxy {
 		triggers.add(new FramesTrigger());
 		triggers.add(new LatencyTrigger());
 		triggers.add(new LocationTrigger());
-
 		MinecraftForge.EVENT_BUS.register(toggle);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
@@ -46,7 +45,7 @@ public class ClientProxy {
 		}
 		Minecraft minecraft = Minecraft.getMinecraft();
 		if (canRender(minecraft, event)) {
-			FontRenderer renderer = minecraft.fontRendererObj;
+			FontRenderer renderer = minecraft.fontRenderer;
 			int i = 2;
 			for (ITrigger trigger : triggers) {
 				renderer.drawString(trigger.format(), 2, i, Color.LIGHT_GRAY.getRGB());

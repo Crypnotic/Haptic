@@ -1,7 +1,7 @@
 package me.crypnotic.haptic;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import me.crypnotic.haptic.proxies.ClientProxy;
 import net.minecraftforge.fml.common.Mod;
@@ -14,8 +14,8 @@ public class Haptic {
 
 	public static final String MODID = "haptic";
 	public static final String NAME = "Haptic";
-	public static final String VERSION = "1.8.9-1.1.0";
-	public static final Logger LOGGER = LogManager.getLogger(Haptic.MODID);
+	public static final String VERSION = "1.12-2.1.1";
+	public static final Logger LOGGER = LogManager.getLogManager().getLogger(MODID);
 
 	@SidedProxy(clientSide = "me.crypnotic.haptic.proxies.ClientProxy")
 	private static ClientProxy proxy;
